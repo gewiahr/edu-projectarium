@@ -11,7 +11,7 @@ typedef struct flag_struct {
   bool v;
 } t_flag;
 
-t_flag parce_flag(t_flag _flag, char _current_flag);
+t_flag parse_flag(t_flag _flag, char _current_flag);
 void output_file(FILE *_file);
 void output_modified_file(FILE *_file, t_flag _flag);
 bool skip_repeated_empty_string(t_flag _flag, char _prev_symb, char _symb,

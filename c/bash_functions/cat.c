@@ -5,13 +5,14 @@ int main(int argc, char **argv) {
   char current_flag = 0;
   int flag_count = 0;
   char *flags_available = "beEnsTtv";
+  int current_file = 0;
 
   while ((current_flag = getopt(argc, argv, flags_available)) != -1) {
-    flag = parce_flag(flag, current_flag);
+    flag = parse_flag(flag, current_flag);
     flag_count++;
   }
 
-  int current_file = optind;
+  current_file = optind;
   while (current_file < argc) {
     FILE *opened_file = fopen(argv[current_file], "rt");
     if (!opened_file) {
@@ -29,7 +30,7 @@ int main(int argc, char **argv) {
   return 0;
 }
 
-t_flag parce_flag(t_flag _flag, char _current_flag) {
+t_flag parse_flag(t_flag _flag, char _current_flag) {
   switch (_current_flag) {
     case 'b':
       _flag.b = true;
@@ -115,8 +116,5 @@ void output_modified_file(FILE *_file, t_flag _flag) {
 
 bool skip_repeated_empty_string(t_flag _flag, char _prev_symb, char _symb,
                                 bool _two_EOS_appeared) {
-  bool skip = false;
-  if (_flag.s && _prev_symb == '\n' && _symb == '\n' && _two_EOS_appeared)
-    skip = true;
-  return skip;
+  return (_flag.s && _prev_symb == '\n' && _symb == '\n' && _two_EOS_appeared) ? true : false;
 }
